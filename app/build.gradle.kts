@@ -33,6 +33,18 @@ android {
 }
 
 dependencies {
+    implementation ("com.google.code.gson:gson:2.8.9")
+    implementation ("io.coil-kt:coil:1.4.0")
+    implementation ("org.osmdroid:osmdroid-android:6.1.18")
+
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.4.1")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.4.1")
+    implementation ("androidx.room:room-runtime:2.5.1")
+    annotationProcessor("androidx.room:room-compiler:2.5.1")
+    implementation ("androidx.navigation:navigation-fragment:2.4.1")
+    implementation ("androidx.navigation:navigation-ui:2.4.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
