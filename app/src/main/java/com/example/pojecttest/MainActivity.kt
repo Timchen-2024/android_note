@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pojecttest.databinding.ActivityMainBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.osmdroid.tileprovider.tilesource.XYTileSource
 import org.osmdroid.views.MapView
 import java.util.Date
@@ -33,28 +35,29 @@ class MainActivity : AppCompatActivity() {
 
 
         val file = File(filepath)
-        Log.d("TEST", file.toString())
         val tileProvider_ = OfflineTileProvider(
             SimpleRegisterReceiver(this@MainActivity),
             arrayOf(file)
         )
         binding.apply {
-            mapID.tileProvider = tileProvider_
-            mapID.setUseDataConnection(false)
-            mapID.setTileSource(
-                XYTileSource(
-                    "Google Maps HD",
-                    7,
-                    12,
-                    256,
-                    ".png",
-                    arrayOf("")
+            mapID.apply {
+                tileProvider = tileProvider_
+                setUseDataConnection(false)
+                setTileSource(
+                    XYTileSource(
+                        "Google Maps HD",
+                        7,
+                        12,
+                        256,
+                        ".png",
+                        arrayOf("")
+                    )
                 )
-            )
-            val mapcrtl = mapID.controller
-
-            mapcrtl.setZoom(9.5)
-            mapcrtl.setCenter(GeoPoint(25,121))
+                controller.apply {
+                    setZoom(9.5)
+                    setCenter(GeoPoint(25.0168, 121.4628))
+                }
+            }
         }
     }
 }
