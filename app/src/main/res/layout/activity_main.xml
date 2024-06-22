@@ -15,6 +15,12 @@
     <org.osmdroid.views.MapView
         android:id="@+id/mapID"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="600dp"/>
+    <Button
+        android:id="@+id/btn"
+        android:text="Open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
 </LinearLayout>

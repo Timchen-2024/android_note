@@ -2,9 +2,11 @@ package com.example.pojecttest
 
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pojecttest.databinding.ActivityMainBinding
 import org.osmdroid.tileprovider.tilesource.XYTileSource
 import org.osmdroid.views.MapView
 import java.util.Date
@@ -15,40 +17,44 @@ import org.osmdroid.util.GeoPoint
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
         setContentView(R.layout.activity_main)
-        val filepath = "/data/data/com.examaple.projecttest/files/osmdroid/map.sqlite"
+        enableEdgeToEdge()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        var textview : TextView = findViewById(R.id.time_date)
-
+        var textview: TextView = findViewById(R.id.time_date)
         textview.text = Date().hours.toString()
 
-        var mapID : MapView = findViewById(R.id.mapID)
+        val filepath = "/data/data/com.example.pojecttest/files/osmdroid/map.sqlite"
+        getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
 
-        mapID.setUseDataConnection(false)
-        mapID.setTileSource(
-            XYTileSource(
-                "Google Maps HD",
-                7,
-                12,
-                256,
-                ".png",
-                arrayOf("")
-            )
-        )
+
         val file = File(filepath)
+        Log.d("TEST", file.toString())
         val tileProvider_ = OfflineTileProvider(
             SimpleRegisterReceiver(this@MainActivity),
             arrayOf(file)
         )
-        mapID.tileProvider = tileProvider_
+        binding.apply {
+            mapID.tileProvider = tileProvider_
+            mapID.setUseDataConnection(false)
+            mapID.setTileSource(
+                XYTileSource(
+                    "Google Maps HD",
+                    7,
+                    12,
+                    256,
+                    ".png",
+                    arrayOf("")
+                )
+            )
+            val mapcrtl = mapID.controller
 
-        val mapctrl = mapID.controller
-        mapctrl.setZoom(9.5)
-        val startpoint = GeoPoint(48.8583,2.2944)
-        mapctrl.setCenter(startpoint)
+            mapcrtl.setZoom(9.5)
+            mapcrtl.setCenter(GeoPoint(25,121))
+        }
     }
 }
