@@ -18,7 +18,7 @@
         android:layout_height="600dp"/>
     <Button
         android:id="@+id/btn"
-        android:text="Open"
+        android:text="Call"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
