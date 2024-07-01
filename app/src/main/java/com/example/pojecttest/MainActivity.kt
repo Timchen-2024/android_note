@@ -3,10 +3,12 @@ package com.example.pojecttest
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +23,7 @@ import org.osmdroid.config.Configuration.*
 import org.osmdroid.tileprovider.modules.OfflineTileProvider
 import org.osmdroid.tileprovider.util.SimpleRegisterReceiver
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.Marker
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -60,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             SimpleRegisterReceiver(this@MainActivity), arrayOf(file)
         )
         binding.apply {
+
             mapID.apply {
                 tileProvider = tileProvider_
                 setUseDataConnection(false)
@@ -73,7 +77,15 @@ class MainActivity : AppCompatActivity() {
                     setCenter(GeoPoint(25.0168, 121.4628))
                 }
             }
-            btn.setOnClickListener {
+            for (i in deCityListXml_fun(this@MainActivity)){
+                val marker = Marker(mapID)
+                var data = deWeather_fun(this@MainActivity,i.file_name)
+                marker.position = GeoPoint(data.latitude.substring(0,data.latitude.length-1).toDouble(),data.longitude.substring(0,data.longitude.length-1).toDouble())
+                Log.d("Marker",marker.position.toString())
+                marker.title = i.name
+                mapID.overlays.add(marker)
+            }
+            callBtn.setOnClickListener {
                 val builder = NotificationCompat.Builder(this@MainActivity, channelId)
                     .setSmallIcon(R.drawable.ic_launcher_foreground).setContentTitle("這是通知")
                     .setContentText("對 這是通知").setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -88,6 +100,12 @@ class MainActivity : AppCompatActivity() {
                     }
                     notify(notification_id, builder.build())
                 }
+            }
+
+
+            changeBtn.setOnClickListener {
+                var intent = Intent(this@MainActivity,array_view::class.java)
+                startActivity(intent)
             }
         }
     }

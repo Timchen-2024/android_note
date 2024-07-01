@@ -16,11 +16,22 @@
         android:id="@+id/mapID"
         android:layout_width="match_parent"
         android:layout_height="600dp"/>
-    <Button
-        android:id="@+id/btn"
-        android:text="Call"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/call_btn"
+            android:text="Call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/change_btn"
+            android:text="Change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 
 </LinearLayout>
